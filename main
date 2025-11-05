@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>C Programming Terminal</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --terminal: #0d1117;
+      --text: #00ff99;
+      --accent: #00ffaa;
+      --muted: #4efcbf;
+      --cursor: #00ff99;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    header {
+      background-color: #001a12;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--accent);
+      box-shadow: 0 0 20px rgba(0,255,153,0.3);
+    }
+    .brand {
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: bold;
+      text-shadow: 0 0 10px var(--accent);
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--accent);
+    }
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: var(--terminal);
+      border-radius: 8px;
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 20px rgba(0,255,153,0.2);
+      position: relative;
+    }
+    h1, h2 {
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--accent);
+    }
+    p, li {
+      color: var(--text);
+      line-height: 1.6;
+    }
+    pre {
+      background: #000;
+      border-left: 3px solid var(--accent);
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      color: var(--muted);
+      box-shadow: inset 0 0 10px rgba(0,255,153,0.2);
+      position: relative;
+    }
+    pre::before {
+      content: "$ ";
+      color: var(--accent);
+      position: absolute;
+      left: 8px;
+      top: 8px;
+    }
+    code {
+      color: var(--text);
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: var(--muted);
+      border-top: 1px solid var(--accent);
+      box-shadow: 0 -4px 20px rgba(0,255,153,0.1);
+    }
+    /* Typing animation */
+    .typing::after {
+      content: '|';
+      animation: blink 1s infinite;
+      color: var(--cursor);
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+    /* Terminal flicker effect */
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 0.99;
+      }
+      20%, 24%, 55% {
+        opacity: 0.4;
+      }
+    }
+    .terminal-glow {
+      animation: flicker 3s infinite;
+    }
+    @media (max-width: 700px) {
+      header { flex-direction: column; }
+      nav { margin-top: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="terminal-glow">
+    <div class="brand">C-Term</div>
+    <nav>
+      <a href="#home" id="nav-home">Home</a>
+      <a href="#history" id="nav-history">History</a>
+      <a href="#basics" id="nav-basics">Basics</a>
+      <a href="#resources" id="nav-resources">Resources</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="page">
+      <h1 class="typing">Welcome to C-Term</h1>
+      <p>[Type your own introduction here — what this site is, your purpose, etc.]</p>
+      <pre><code>#include &lt;stdio.h&gt;
+int main(void) {
+  printf("Welcome to C-Term!\\n");
+  return 0;
+}</code></pre>
+    </section>
+
+    <section id="history" class="page" hidden>
+      <h1 class="typing">History</h1>
+      <p>[Write your own history of the C language here.]</p>
+    </section>
+
+    <section id="basics" class="page" hidden>
+      <h1 class="typing">C Basics</h1>
+      <p>[Explain your custom C basics and examples here.]</p>
+      <pre><code>gcc main.c -o main
+./main</code></pre>
+    </section>
+
+    <section id="resources" class="page" hidden>
+      <h1 class="typing">Resources</h1>
+      <p>[List your learning resources or project links here.]</p>
+    </section>
+  </main>
+
+  <footer class="terminal-glow">
+    © 2025 C-Term — Terminal Inspired C Programming Hub
+  </footer>
+
+  <script>
+    const pages = ['home','history','basics','resources'];
+    function showPage(name) {
+      pages.forEach(p => {
+        const el = document.getElementById(p);
+        const nav = document.getElementById('nav-' + p);
+        if (p === name) {
+          el.hidden = false;
+          nav.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          el.hidden = true;
+          nav.classList.remove('active');
+        }
+      });
+    }
+    function route() {
+      let h = location.hash.slice(1) || 'home';
+      if (!pages.includes(h)) h = 'home';
+      showPage(h);
+    }
+    window.addEventListener('hashchange', route);
+    document.addEventListener('DOMContentLoaded', route);
+  </script>
+</body>
+</html>
